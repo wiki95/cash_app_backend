@@ -53,6 +53,9 @@ router.post("/", async (req, result, next) => {
 		});
 	}
 	try {
+		await asynqQuery(
+			"DELETE FROM `give_take` WHERE DATE(`DATE_TIME`) <= DATE(NOW() - INTERVAL 7 DAY)"
+		);
 		const res = await asynqQuery(give_take_insert);
 		const amount_taken_insert =
 			"insert into amount_taken_denom (TOTAL_TAKEN,T_FT,T_OT,T_FH,T_OH,T_FIF,T_TWE,T_TEN,T_FIV,T_TWO,T_ONE,GT_ID) values('" +
